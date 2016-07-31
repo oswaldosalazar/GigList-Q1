@@ -20,9 +20,20 @@ $(document).ready(function() {
               error: function(err) {console.error(err)},
               method: 'GET',
               success: function(data) {
+                  console.log(data.length)
                   console.log(data[0].title)
+                  console.log(data)
                   $('#eventTitle').text(data[0].title)
+                  $('#eventDateTime').text(data[0].formatted_datetime)
+                  $('a').attr("href", data[0].ticket_url)
 
+                //   for (var role in data) {
+                //       var option = $('<option>')
+                //       option.text(data[role].title)
+                //       var pic = data[role].img
+                //       option.attr("value",pic)
+                //       $("#select").append(option)
+                //   }
               },
           })
     })
