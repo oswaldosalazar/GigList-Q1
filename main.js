@@ -14,14 +14,15 @@ $(document).ready(function() {
           $(console.log(formInput.city))
           $(console.log(formInput.state))
           $(console.log(formInput.artists))
-          $(console.log(formInput.artists[1]))
           $.ajax({
-              url: 'http://api.bandsintown.com/artists/'+(formInput.artists[1].trim())+'/events/search.json?api_version=2.0&app_id=GIGLIST&location='+formInput.city+','+formInput.state+'&radius=50',
+              url: 'http://api.bandsintown.com/artists/'+(formInput.artists[0].trim())+'/events/search.json?api_version=2.0&app_id=GIGLIST&location='+formInput.city+','+formInput.state+'&radius=50',
               dataType: 'jsonp',
               error: function(err) {console.error(err)},
               method: 'GET',
               success: function(data) {
-                  console.log(data)
+                  console.log(data[0].title)
+                  $('#eventTitle').text(data[0].title)
+
               },
           })
     })
