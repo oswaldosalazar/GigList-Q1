@@ -31,7 +31,7 @@ $(document).ready(function() {
                             tabDate: data[i].formatted_datetime,
                             tabTix: data[i].ticket_url,
                         }
-                        $(".table").append("<tr><td>"+data[i].artists[0].name+"</td><td>"+data[i].venue.name+"</td><td>"+data[i].venue.city+"</td><td>"+data[i].venue.region+"</td>                        <td>"+data[i].formatted_datetime+"</td><td> <a href="+data[i].ticket_url+">Ticket Link</a> </td></tr>")
+                        $(".table").append("<tr><td>"+data[i].artists[0].name+"</td><td>"+data[i].venue.name+"</td><td>"+data[i].venue.city+"</td><td>"+data[i].venue.region+"</td>                        <td>"+data[i].formatted_datetime+"</td><td> <a href="+data[i].ticket_url+" target="+"_blank"+">Ticket Link</a> </td></tr>")
                         allEvents.push(artistEvents[i])
                     }
                     console.log(artistEvents)
