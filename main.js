@@ -1,16 +1,13 @@
 $(document).ready(function() {
 
-    var formInput = {
-        city: '',
-        state: '',
-        artists: [''],
-    }
+    var formInput = {}
+    var allEvents = []
+    var artistEvents = []
 
     $('#submit').on('click', function(event) {
         //variables
-        var allEvents = []
-        var artistEvents = []
         event.preventDefault()
+        $("#eventsTable tr").remove()
         formInput.city = $('#cityURL').val()
         formInput.state = $('#select').val()
         formInput.artists = $('#artistURL').val().split(',')
@@ -25,15 +22,6 @@ $(document).ready(function() {
                 error: function(err) {console.error(err)},
                 method: 'GET',
                 success: function(data) {
-                    // console.log(data.length)
-                    // console.log(data)
-                    // console.log(data[0].artists[0].name)
-                    // console.log(data[0].venue.name)
-                    // console.log(data[0].venue.city)
-                    // console.log(data[0].venue.region)
-                    $('#eventTitle').text(data[0].title)
-                    $('#eventDateTime').text(data[0].formatted_datetime)
-                    $('a').attr("href", data[0].ticket_url)
                     for (var i in data) {
                         artistEvents[i] = {
                             tabArtist: data[i].artists[0].name,
@@ -43,6 +31,7 @@ $(document).ready(function() {
                             tabDate: data[i].formatted_datetime,
                             tabTix: data[i].ticket_url,
                         }
+                        $(".table").append("<tr><td>"+data[i].artists[0].name+"</td><td>"+data[i].venue.name+"</td><td>"+data[i].venue.city+"</td><td>"+data[i].venue.region+"</td>                        <td>"+data[i].formatted_datetime+"</td><td> <a href="+data[i].ticket_url+">Ticket Link</a> </td></tr>")
                         allEvents.push(artistEvents[i])
                     }
                     console.log(artistEvents)
@@ -50,11 +39,11 @@ $(document).ready(function() {
                 },
             })
         }
+        allEvents = []
+        artistEvents = []
     })
-
 
 })
 
 
-// url: 'http://api.bandsintown.com/artists/The Decemberists/events.json?api_version=2.0&app_id=GALVANIZE',
- // 'http://api.bandsintown.com/artists/'+formInput.artist+'/events/search.json?api_version=2.0&app_id=GIGLIST&location='+formInput.city+','+formInput.state+'&radius=50'
+// http://api.bandsintown.com/artists/The Decemberists/events.json?api_version=2.0&app_id=GALVANIZE
