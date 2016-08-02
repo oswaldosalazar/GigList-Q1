@@ -5,7 +5,7 @@ $(document).ready(function() {
     var artistEvents = []
 
     $('#submit').on('click', function(event) {
-        //variables
+
         event.preventDefault()
         $("#eventsTable tr").remove()
         formInput.city = $('#cityURL').val()
@@ -22,19 +22,27 @@ $(document).ready(function() {
                 error: function(err) {console.error(err)},
                 method: 'GET',
                 success: function(data) {
-                    for (var i in data) {
-                        artistEvents[i] = {
-                            tabArtist: data[i].artists[0].name,
-                            tabVenue: data[i].venue.name,
-                            tabCity: data[i].venue.city,
-                            tabState: data[i].venue.region,
-                            tabDate: data[i].formatted_datetime,
-                            tabTix: data[i].ticket_url,
+                    console.log(data.length)
+                    if (data.length > 0) {
+                        $(".text-success").text("Great! Your favorite artists are on tour in your area!")
+                        for (var i in data) {
+                            artistEvents[i] = {
+                                tabArtist: data[i].artists[0].name,
+                                tabVenue: data[i].venue.name,
+                                tabCity: data[i].venue.city,
+                                tabState: data[i].venue.region,
+                                tabDate: data[i].formatted_datetime,
+                                tabTix: data[i].ticket_url,
+                            }
+                            $(".table").append("<tr><td>"+data[i].artists[0].name+"</td><td>"+data[i].venue.name+"</td><td>"+data[i].venue.city+"</td><td>"+data[i].venue.region+"</td>                        <td>"+data[i].formatted_datetime+"</td><td> <a href="+data[i].ticket_url+" target="+"_blank"+">Ticket Link</a> </td></tr>")
+                            allEvents.push(artistEvents[i])
                         }
-                        $(".table").append("<tr><td>"+data[i].artists[0].name+"</td><td>"+data[i].venue.name+"</td><td>"+data[i].venue.city+"</td><td>"+data[i].venue.region+"</td>                        <td>"+data[i].formatted_datetime+"</td><td> <a href="+data[i].ticket_url+" target="+"_blank"+">Ticket Link</a> </td></tr>")
-                        allEvents.push(artistEvents[i])
+
+                    } else {
+                        $(".text-warning").text("Bummer! Your favorite artists are not coming but check out the recommended gigs.")
                     }
                     console.log(artistEvents)
+                    console.log(typeof artistEvents)
                     console.log(allEvents)
                 },
             })
