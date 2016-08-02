@@ -3,6 +3,7 @@ $(document).ready(function() {
     var formInput = {}
     var allEvents = []
     var artistEvents = []
+    var dataLength = 0
 
     $('#submit').on('click', function(event) {
 
@@ -22,9 +23,10 @@ $(document).ready(function() {
                 error: function(err) {console.error(err)},
                 method: 'GET',
                 success: function(data) {
-                    console.log(data.length)
-                    if (data.length > 0) {
-                        $(".text-success").text("Great! Your favorite artists are on tour in your area!")
+                    dataLength += data.length
+                    console.log(dataLength)
+                    if (dataLength > 0) {
+                        $("#successFailureMsg").attr("class","text-success").text("Great! Your favorite artists are on tour in your area!")
                         for (var i in data) {
                             artistEvents[i] = {
                                 tabArtist: data[i].artists[0].name,
@@ -39,16 +41,16 @@ $(document).ready(function() {
                         }
 
                     } else {
-                        $(".text-warning").text("Bummer! Your favorite artists are not coming but check out the recommended gigs.")
+                        $("#successFailureMsg").attr("class","text-warning").text("Bummer! Your favorite artists are not coming but check out the recommendations!")
                     }
                     console.log(artistEvents)
-                    console.log(typeof artistEvents)
                     console.log(allEvents)
                 },
             })
         }
         allEvents = []
         artistEvents = []
+        dataLength = 0
     })
 
 })
