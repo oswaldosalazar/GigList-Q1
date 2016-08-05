@@ -8,7 +8,7 @@ function gigList (city, state, artists) {
 
     for (var j in artists) {
         $.ajax({
-            url: 'http://api.bandsintown.com/artists/'+artists[j]+'/events/search.json?api_version=2.0&app_id=GIGLIST&location='+city+','+state+'&radius=50',
+            url: 'https://api.bandsintown.com/artists/'+artists[j]+'/events/search.json?api_version=2.0&app_id=GIGLIST&location='+city+','+state+'&radius=50',
             dataType: 'jsonp',
             error: function(err) {console.error(err)},
             method: 'GET',
@@ -38,7 +38,7 @@ function recommend (city, state, artists) {
 
     for (var j in artists) {
         $.ajax({
-            url: 'http://api.bandsintown.com/artists/'+(artists[j])+'/events/recommended?location='+city+','+state+'&radius=50&app_id=YOUR_APP_ID&api_version=2.0&format=json',
+            url: 'https://api.bandsintown.com/artists/'+(artists[j])+'/events/recommended?location='+city+','+state+'&radius=50&app_id=YOUR_APP_ID&api_version=2.0&format=json',
             dataType: 'jsonp',
             error: function(err) {console.error(err)},
             method: 'GET',
@@ -100,23 +100,5 @@ $(document).ready(function() {
 
         },1000)
         recommendedList = []
-
-
-
-
-        // doNotRepeatArtists(recommendedList)
-
-
-        // recommend(formInput.city, formInput.state, formInput.artists)
-
-
-        // gigList(formInput.city, formInput.state, recArtist)
-
-        // $.when(recommend(formInput.city, formInput.state, formInput.artists)).then(gigList(formInput.city, formInput.state, uniqueArtists))
-
-
-        // console.log("Recommended array: "+recArtist)
-
-        //Call function to recommend artists
     })
 })
