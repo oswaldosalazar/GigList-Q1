@@ -35,6 +35,7 @@ function gigList (city, state, artists) {
 function recommend (city, state, artists) {
 
     console.log("Recommend for "+artists)
+
     for (var j in artists) {
         $.ajax({
             url: 'http://api.bandsintown.com/artists/'+(artists[j])+'/events/recommended?location='+city+','+state+'&radius=50&app_id=YOUR_APP_ID&api_version=2.0&format=json',
@@ -51,20 +52,20 @@ function recommend (city, state, artists) {
             },
         })
     }
+    console.log("Full unfiltered list: "+recommendedList)
+    // return recommendedList
+}
 
-    uniqueArtists = recommendedList.filter(function(elem, pos) {
-        return recommendedList.indexOf(elem) == pos;
-    })
-    console.log(recommendedList.length)
-    if (uniqueArtists.length === 0) {
-        $("#successFailureMsg").empty()
-        $("#tableHeader tr").empty()
-        $("#successFailureMsg").attr("class","text-danger").text("Bummer! Please wait for your favorite artists or recommended ones to tour in your area.")
-    }
-    recommendedList = []
-    console.log("Complete list no repeat: " + uniqueArtists)
+function doNotRepeatArtists (recommendedList) {
 
-    return uniqueArtists
+        uniqueArtists = recommendedList.filter(function(elem, pos) {
+            return recommendedList.indexOf(elem) == pos;
+        })
+        console.log(recommendedList.length)
+
+        recommendedList = []
+        console.log("Complete list no repeat: " + uniqueArtists)
+        // return uniqueArtists
 }
 
 $(document).ready(function() {
@@ -84,14 +85,39 @@ $(document).ready(function() {
         //Remove data form previous clicks
         $("#eventsTable tr").remove()
         //Call function to populate table with input and recommended artists
+
         // gigList(formInput.city, formInput.state, formInput.artists)
-        recArtist = recommend(formInput.city, formInput.state, formInput.artists)
-        console.log(recArtist)
-        gigList(formInput.city, formInput.state, recArtist)
-        // gigList(formInput.city, formInput.state, formInput.artists)
+        recommend(formInput.city, formInput.state, formInput.artists)
+        setTimeout( function() {
+
+            doNotRepeatArtists(recommendedList)
+            if (recommendedList.length === 0) {
+                $("#successFailureMsg").empty()
+                $("#tableHeader tr").empty()
+                $("#successFailureMsg").attr("class","text-danger").text("Bummer! Please wait for your favorite artists or recommended ones to tour in your area.")
+            }
+            gigList(formInput.city, formInput.state, uniqueArtists)
 
 
-        console.log("Recommended array: "+recArtist)
+
+        },1000)
+        recommendedList = []
+
+
+
+
+        // doNotRepeatArtists(recommendedList)
+
+
+        // recommend(formInput.city, formInput.state, formInput.artists)
+
+
+        // gigList(formInput.city, formInput.state, recArtist)
+
+        // $.when(recommend(formInput.city, formInput.state, formInput.artists)).then(gigList(formInput.city, formInput.state, uniqueArtists))
+
+
+        // console.log("Recommended array: "+recArtist)
 
         //Call function to recommend artists
     })
