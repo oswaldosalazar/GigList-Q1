@@ -38,7 +38,7 @@ function recommend (city, state, artists) {
 
     for (var j in artists) {
         $.ajax({
-            url: 'https://api.bandsintown.com/artists/'+(artists[j])+'/events/recommended?location='+city+','+state+'&radius=50&app_id=YOUR_APP_ID&api_version=2.0&format=json',
+            url: 'https://api.bandsintown.com/artists/'+(artists[j])+'/events/recommended?location='+city+','+state+'&radius=50&app_id=GIGLIST&api_version=2.0&format=json',
             dataType: 'jsonp',
             error: function(err) {console.error(err)},
             method: 'GET',
