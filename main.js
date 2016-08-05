@@ -73,7 +73,7 @@ $(document).ready(function() {
     $('#submit').on('click', function(event) {
         //Default action prevented
         event.preventDefault()
-        // $("#successFailureMsg").empty()
+        $("#successFailureMsg").empty()
         $("#tableHeader tr").empty()
         //Assign variables from form inputs.
         formInput.city = $('#cityURL').val()
@@ -97,8 +97,6 @@ $(document).ready(function() {
                 $("#successFailureMsg").attr("class","text-danger").text("Bummer! Please wait for your favorite artists or recommended ones to tour in your area.")
             }
             gigList(formInput.city, formInput.state, uniqueArtists)
-
-
 
         },1000)
         recommendedList = []
