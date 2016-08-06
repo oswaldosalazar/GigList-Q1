@@ -68,7 +68,20 @@ function doNotRepeatArtists (recommendedList) {
         // return uniqueArtists
 }
 
+
+function allFilled() {
+    var filled = true
+    $('body input').each(function() {
+        if($(this).val() == '') filled = false
+    })
+    return filled
+}
+
 $(document).ready(function() {
+
+    $('#cityURL, #select, #artistURL').bind('keyup', function() {
+        if(allFilled()) $('#submit').removeAttr('disabled')
+    })
 
     $('#submit').on('click', function(event) {
         //Default action prevented
