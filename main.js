@@ -3,6 +3,7 @@ var formInput = {}
 var recommendedList = []
 var recArtist = []
 var uniqueArtists = []
+var ticketIcon = '<i class="fa fa-ticket" aria-hidden="true"></i>'
 
 function gigList (city, state, artists) {
 
@@ -21,7 +22,7 @@ function gigList (city, state, artists) {
                     $("#successFailureMsg").attr("class","text-success").text("Great! Your favorite artists or recommended ones are touring in your area!")
                     $("#tableHeader").html("<tr><th>Artist</th><th>Venue</th><th>City</th><th>State</th><th>Date and Time</th><th>Tickets</th></tr>")
                     for (var i in data) {
-                        $(".table").append("<tr><td>"+data[i].artists[0].name+"</td><td>"+data[i].venue.name+"</td><td>"+data[i].venue.city+"</td><td>"+data[i].venue.region+"</td><td>"+data[i].formatted_datetime+"</td><td> <a href="+data[i].ticket_url+" target="+"_blank"+">Ticket Link</a> </td></tr>")
+                        $(".table").append("<tr><td>"+data[i].artists[0].name+"</td><td>"+data[i].venue.name+"</td><td>"+data[i].venue.city+"</td><td>"+data[i].venue.region+"</td><td>"+data[i].formatted_datetime+"</td><td> <a href="+data[i].ticket_url+" target="+"_blank"+">"+ticketIcon+"</a> </td></tr>")
                     }
                 }
             },
