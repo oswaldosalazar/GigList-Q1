@@ -14,10 +14,7 @@ function gigList (city, state, artists) {
             error: function(err) {console.error(err)},
             method: 'GET',
             success: function(data) {
-                //set length variable to prevent "else" if one data point is empty
                 dataLength += data.length
-                // console.log("datalength   " + dataLength)
-                //routine to fill table if favorite artist is touring in the city
                 if (dataLength > 0) {
                     $("#successFailureMsg").attr("class","text-success").text("Great! Your favorite artists or recommended ones are touring in your area!")
                     $("#tableHeader").html("<tr><th>Artist</th><th>Venue</th><th>City</th><th>State</th><th>Date and Time</th><th>Tickets</th></tr>")
@@ -53,20 +50,13 @@ function recommend (city, state, artists) {
             },
         })
     }
-    console.log("Full unfiltered list: "+recommendedList)
-    // return recommendedList
 }
 
 function doNotRepeatArtists (recommendedList) {
-
         uniqueArtists = recommendedList.filter(function(elem, pos) {
             return recommendedList.indexOf(elem) == pos;
         })
-        console.log(recommendedList.length)
-
         recommendedList = []
-        console.log("Complete list no repeat: " + uniqueArtists)
-        // return uniqueArtists
 }
 
 
@@ -95,15 +85,9 @@ $(document).ready(function() {
         formInput.artists = $('#artistURL').val().split(',')
         //Trim spaces from entered artists names
         formInput.artists = formInput.artists.map(Function.prototype.call, String.prototype.trim)
-        console.log(formInput.artists)
-        //Remove data form previous clicks
         $("#eventsTable tr").remove()
-        //Call function to populate table with input and recommended artists
-
-        // gigList(formInput.city, formInput.state, formInput.artists)
         recommend(formInput.city, formInput.state, formInput.artists)
         setTimeout( function() {
-
             doNotRepeatArtists(recommendedList)
             if (recommendedList.length === 0) {
                 $("#successFailureMsg").empty()
@@ -111,7 +95,6 @@ $(document).ready(function() {
                 $("#successFailureMsg").attr("class","text-danger").text("Bummer! Please wait for your favorite artists or recommended ones to tour in your area.")
             }
             gigList(formInput.city, formInput.state, uniqueArtists)
-
         },1000)
         recommendedList = []
     })
